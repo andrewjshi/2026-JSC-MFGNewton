@@ -1,0 +1,156 @@
+======================================================================================================================
+   LOCAL CONGESTION MFG EXAMPLE (NEWTON TYPE 1: GLOBAL NEWTON)
+======================================================================================================================
+Parameters:
+  xmin = 0.0, xmax = 1.0
+  T    = 1.0, Nx = 200, Nt = 100
+  nu   = 0.01, beta = 1.5, zeta = 1.0
+Solver Parameters:
+  NEWTON_MAX_ITER = 100, NEWTON_TOL = 1e-09
+  Continuation: NU_START=1.0, BETA=0.75, GAMMA=0.5
+Grid Info:
+  dt = 0.010000, dx = 0.005000
+----------------------------------------------------------------------------------------------------------------------
+First Solve: nu = 1.0000
+      Iter  0 | res = 1.5689e+05 | Solve Time: 1.7459s
+      Iter  1 | res = 1.1741e+03 | Solve Time: 1.6519s
+      Iter  2 | res = 6.7150e+00 | Solve Time: 1.6612s
+      Iter  3 | res = 2.2654e-02 | Solve Time: 1.6495s
+      Iter  4 | res = 1.7992e-08 | Solve Time: 1.6685s
+      Iter  5 | res = 4.3415e-11 (Converged)
+    -> Converged! (res=4.3415e-11) Total for nu=1.0000: 9.4384s
+
+  Attempting nu = 0.750000...
+      Iter  0 | res = 5.1684e+01 | Solve Time: 1.6409s
+      Iter  1 | res = 9.6335e-03 | Solve Time: 1.6600s
+      Iter  2 | res = 6.1032e-09 | Solve Time: 1.6530s
+      Iter  3 | res = 2.9918e-11 (Converged)
+    -> Converged! (res=2.9918e-11) Total for nu=0.750000: 5.6632s
+
+  Attempting nu = 0.562500...
+      Iter  0 | res = 5.0242e+01 | Solve Time: 1.6488s
+      Iter  1 | res = 1.1170e-02 | Solve Time: 1.6511s
+      Iter  2 | res = 1.3144e-08 | Solve Time: 1.6576s
+      Iter  3 | res = 2.8799e-11 (Converged)
+    -> Converged! (res=2.8799e-11) Total for nu=0.562500: 5.6663s
+
+  Attempting nu = 0.421875...
+      Iter  0 | res = 4.9062e+01 | Solve Time: 1.6448s
+      Iter  1 | res = 1.4313e-02 | Solve Time: 1.6601s
+      Iter  2 | res = 3.5667e-08 | Solve Time: 1.6997s
+      Iter  3 | res = 1.7495e-11 (Converged)
+    -> Converged! (res=1.7495e-11) Total for nu=0.421875: 5.7175s
+
+  Attempting nu = 0.316406...
+      Iter  0 | res = 4.8118e+01 | Solve Time: 1.7160s
+      Iter  1 | res = 2.4181e-02 | Solve Time: 1.6729s
+      Iter  2 | res = 1.5370e-07 | Solve Time: 1.6959s
+      Iter  3 | res = 1.6350e-11 (Converged)
+    -> Converged! (res=1.6350e-11) Total for nu=0.316406: 5.8002s
+
+  Attempting nu = 0.237305...
+      Iter  0 | res = 4.7363e+01 | Solve Time: 1.6417s
+      Iter  1 | res = 4.0007e-02 | Solve Time: 1.6453s
+      Iter  2 | res = 6.9059e-07 | Solve Time: 1.6395s
+      Iter  3 | res = 1.0789e-11 (Converged)
+    -> Converged! (res=1.0789e-11) Total for nu=0.237305: 5.6334s
+
+  Attempting nu = 0.177979...
+      Iter  0 | res = 4.6737e+01 | Solve Time: 1.6520s
+      Iter  1 | res = 6.4179e-02 | Solve Time: 1.6455s
+      Iter  2 | res = 2.8626e-06 | Solve Time: 1.6516s
+      Iter  3 | res = 9.1163e-12 (Converged)
+    -> Converged! (res=9.1163e-12) Total for nu=0.177979: 5.6458s
+
+  Attempting nu = 0.133484...
+      Iter  0 | res = 4.6176e+01 | Solve Time: 1.6800s
+      Iter  1 | res = 1.0015e-01 | Solve Time: 1.6322s
+      Iter  2 | res = 1.0518e-05 | Solve Time: 1.6270s
+      Iter  3 | res = 7.8172e-12 (Converged)
+    -> Converged! (res=7.8172e-12) Total for nu=0.133484: 5.6310s
+
+  Attempting nu = 0.100113...
+      Iter  0 | res = 4.5762e+01 | Solve Time: 1.6595s
+      Iter  1 | res = 1.5110e-01 | Solve Time: 1.6325s
+      Iter  2 | res = 3.4160e-05 | Solve Time: 1.6415s
+      Iter  3 | res = 8.2903e-12 (Converged)
+    -> Converged! (res=8.2903e-12) Total for nu=0.100113: 5.6348s
+
+  Attempting nu = 0.075085...
+      Iter  0 | res = 4.5350e+01 | Solve Time: 1.6392s
+      Iter  1 | res = 2.7509e-01 | Solve Time: 1.6407s
+      Iter  2 | res = 1.0150e-04 | Solve Time: 1.6556s
+      Iter  3 | res = 1.1375e-10 (Converged)
+    -> Converged! (res=1.1375e-10) Total for nu=0.075085: 5.6496s
+
+  Attempting nu = 0.056314...
+      Iter  0 | res = 4.4884e+01 | Solve Time: 1.7183s
+      Iter  1 | res = 2.5730e+00 | Solve Time: 1.7087s
+      Iter  2 | res = 1.1115e-02 | Solve Time: 1.6984s
+      Iter  3 | res = 8.5001e-08 | Solve Time: 1.7744s
+      Iter  4 | res = 3.4985e-12 (Converged)
+    -> Converged! (res=3.4985e-12) Total for nu=0.056314: 7.7936s
+
+  Attempting nu = 0.042235...
+      Iter  0 | res = 4.4393e+01 | Solve Time: 1.6481s
+      Iter  1 | res = 2.0861e+01 | Solve Time: 1.6386s
+      Iter  2 | res = 1.9833e+00 | Solve Time: 1.6253s
+      Iter  3 | res = 6.0264e-03 | Solve Time: 1.6188s
+      Iter  4 | res = 2.4827e-08 | Solve Time: 1.6167s
+      Iter  5 | res = 3.0156e-12 (Converged)
+    -> Converged! (res=3.0156e-12) Total for nu=0.042235: 9.2124s
+
+  Attempting nu = 0.031676...
+      Iter  0 | res = 4.3921e+01 | Solve Time: 1.6125s
+      Iter  1 | res = 3.5886e+01 | Solve Time: 1.6070s
+      Iter  2 | res = 3.5159e+00 | Solve Time: 1.6134s
+      Iter  3 | res = 1.1295e-01 | Solve Time: 1.6258s
+      Iter  4 | res = 8.8781e-05 | Solve Time: 1.6229s
+      Iter  5 | res = 4.7056e-11 (Converged)
+    -> Converged! (res=4.7056e-11) Total for nu=0.031676: 9.1268s
+
+  Attempting nu = 0.023757...
+      Iter  0 | res = 4.3530e+01 | Solve Time: 1.6168s
+      Iter  1 | res = 1.0389e+01 | Solve Time: 1.6271s
+      Iter  2 | res = 2.3638e+00 | Solve Time: 1.6243s
+      Iter  3 | res = 5.2373e-02 | Solve Time: 1.6058s
+      Iter  4 | res = 6.1027e-05 | Solve Time: 1.6140s
+      Iter  5 | res = 1.6801e-11 (Converged)
+    -> Converged! (res=1.6801e-11) Total for nu=0.023757: 9.1422s
+
+  Attempting nu = 0.017818...
+      Iter  0 | res = 4.3264e+01 | Solve Time: 1.6108s
+      Iter  1 | res = 7.3206e+00 | Solve Time: 1.6214s
+      Iter  2 | res = 2.5776e+00 | Solve Time: 1.6132s
+      Iter  3 | res = 4.3194e-02 | Solve Time: 1.6221s
+      Iter  4 | res = 1.7154e-05 | Solve Time: 1.6140s
+      Iter  5 | res = 2.7640e-12 (Converged)
+    -> Converged! (res=2.7640e-12) Total for nu=0.017818: 9.1332s
+
+  Attempting nu = 0.013363...
+      Iter  0 | res = 4.3059e+01 | Solve Time: 1.6634s
+      Iter  1 | res = 6.2012e+00 | Solve Time: 1.7441s
+      Iter  2 | res = 1.8983e+00 | Solve Time: 1.6874s
+      Iter  3 | res = 2.1588e-02 | Solve Time: 1.6609s
+      Iter  4 | res = 3.0529e-06 | Solve Time: 1.6553s
+      Iter  5 | res = 2.3626e-12 (Converged)
+    -> Converged! (res=2.3626e-12) Total for nu=0.013363: 9.4632s
+
+  Attempting nu = 0.010023...
+      Iter  0 | res = 4.2682e+01 | Solve Time: 1.9583s
+      Iter  1 | res = 4.7887e+00 | Solve Time: 1.9591s
+      Iter  2 | res = 7.2093e-01 | Solve Time: 1.9421s
+      Iter  3 | res = 4.3607e-03 | Solve Time: 1.9306s
+      Iter  4 | res = 1.4319e-07 | Solve Time: 1.9363s
+      Iter  5 | res = 2.3572e-12 (Converged)
+    -> Converged! (res=2.3572e-12) Total for nu=0.010023: 10.7731s
+
+  Attempting nu = 0.010000...
+      Iter  0 | res = 3.7689e-01 | Solve Time: 1.9401s
+      Iter  1 | res = 1.8616e-04 | Solve Time: 1.9311s
+      Iter  2 | res = 1.1901e-09 | Solve Time: 1.9383s
+      Iter  3 | res = 2.2311e-12 (Converged)
+    -> Converged! (res=2.2311e-12) Total for nu=0.010000: 6.5090s
+
+----------------------------------------------------------------------------------------------------------------------
+Total Execution Time: 131.6350 seconds.

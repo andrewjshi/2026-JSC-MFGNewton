@@ -1,0 +1,77 @@
+PART A: STATIONARY NEWTON HISTORY
+Stat Iter 0  | Res: 3.0404e+00 | Lambda: -0.612086
+Stat Iter 1  | Res: 3.1485e-04 | Lambda: -0.600994
+Stat Iter 2  | Res: 1.7920e-10 | Lambda: -0.600955
+Stat Iter 3  | Res: 1.3167e-12 | Lambda: -0.600955
+
+---> EXACT DISCRETE BENCHMARK LOCKED: -0.600955 <---
+
+
+PART B: DYNAMIC RHO CONTINUATION HISTORY
+
+Solving rho = 1.0000e-01
+      Iter 0  | res = 3.6164e-01 | Solve Time: 1.2477s
+      Iter 1  | res = 1.3921e-03 | Solve Time: 1.2594s
+      Iter 2  | res = 7.9517e-07 | Solve Time: 1.5982s
+      Iter 3  | res = 1.7835e-12 (Converged)
+
+Solving rho = 5.0000e-02
+      Iter 0  | res = 6.1095e+00 | Solve Time: 1.3304s
+      Iter 1  | res = 2.7046e-04 | Solve Time: 1.4243s
+      Iter 2  | res = 9.3176e-09 | Solve Time: 1.4769s
+      Iter 3  | res = 3.9346e-12 (Converged)
+
+Solving rho = 2.5000e-02
+      Iter 0  | res = 1.2069e+01 | Solve Time: 1.6138s
+      Iter 1  | res = 6.6905e-05 | Solve Time: 1.4330s
+      Iter 2  | res = 5.7770e-10 (Converged)
+
+Solving rho = 1.2500e-02
+      Iter 0  | res = 2.4063e+01 | Solve Time: 1.4054s
+      Iter 1  | res = 1.6611e-05 | Solve Time: 1.2750s
+      Iter 2  | res = 3.7168e-11 (Converged)
+
+Solving rho = 1.0000e-02
+      Iter 0  | res = 1.2024e+01 | Solve Time: 1.3275s
+      Iter 1  | res = 6.6292e-07 | Solve Time: 1.2700s
+      Iter 2  | res = 1.4651e-11 (Converged)
+
+Solving rho = 5.0000e-03
+      Iter 0  | res = 6.0105e+01 | Solve Time: 1.8921s
+      Iter 1  | res = 2.6447e-06 | Solve Time: 1.6442s
+      Iter 2  | res = 2.8464e-11 (Converged)
+
+Solving rho = 2.5000e-03
+      Iter 0  | res = 1.2020e+02 | Solve Time: 1.2340s
+      Iter 1  | res = 6.6000e-07 | Solve Time: 1.5280s
+      Iter 2  | res = 6.0425e-11 (Converged)
+
+Solving rho = 1.2500e-03
+      Iter 0  | res = 2.4038e+02 | Solve Time: 1.5095s
+      Iter 1  | res = 1.6487e-07 | Solve Time: 1.2446s
+      Iter 2  | res = 1.1170e-10 (Converged)
+
+Solving rho = 1.0000e-03
+      Iter 0  | res = 1.2019e+02 | Solve Time: 1.3585s
+      Iter 1  | res = 6.6708e-09 | Solve Time: 1.3530s
+      Iter 2  | res = 2.1510e-10 (Converged)
+
+Solving rho = 5.0000e-04
+      Iter 0  | res = 6.0096e+02 | Solve Time: 1.6009s
+      Iter 1  | res = 2.6643e-08 | Solve Time: 1.4414s
+      Iter 2  | res = 4.7612e-10 (Converged)
+
+Solving rho = 2.5000e-04
+      Iter 0  | res = 1.2019e+03 | Solve Time: 1.3702s
+      Iter 1  | res = 6.9067e-09 | Solve Time: 1.4227s
+      Iter 2  | res = 9.6088e-10 (Converged)
+
+Solving rho = 1.2500e-04
+      Iter 0  | res = 2.4038e+03 | Solve Time: 1.3690s
+      Iter 1  | res = 3.2032e-09 | Solve Time: 1.4096s
+      Iter 2  | res = 1.9099e-09 (Converged)
+
+Solving rho = 1.0000e-04
+      Iter 0  | res = 1.2019e+03 | Solve Time: 1.4209s
+      Iter 1  | res = 2.0846e-09 | Solve Time: 1.4176s
+      Iter 2  | res = 1.8272e-09 (Converged)

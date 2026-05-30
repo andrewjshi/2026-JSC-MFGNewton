@@ -1,0 +1,50 @@
+=========================================================================================================
+   2D LOCAL CONGESTION MFG (GLOBAL NEWTON - PERIODIC)
+=========================================================================================================
+Parameters:
+  xmin = 0.0, xmax = 1.0
+  T    = 5.0, Nx = 20, Ny = 20, Nt = 20
+  nu_target = 0.05, beta = 1.5, zeta = 1.0
+Solver Parameters:
+  NEWTON_MAX_ITER = 15, NEWTON_TOL = 1e-08
+Continuation Parameters:
+  NU_START = 0.2, BETA_CONT = 0.75, GAMMA_CONT = 0.5, CONT_TOL = 0.0001
+Grid Info:
+  dt = 0.250000, dx = 0.050000, dy = 0.050000
+---------------------------------------------------------------------------------------------------------
+First Solve: nu = 0.2000
+      Iter  0 | res = 5.2818e+00 | Linear Solve Time: 26.0136s
+      Iter  1 | res = 1.0700e+00 | Linear Solve Time: 29.2140s
+      Iter  2 | res = 3.3667e-01 | Linear Solve Time: 34.4175s
+      Iter  3 | res = 1.0190e-01 | Linear Solve Time: 23.8702s
+      Iter  4 | res = 1.4687e-03 | Linear Solve Time: 25.4206s
+      Iter  5 | res = 3.4648e-07 | Linear Solve Time: 25.0909s
+      Iter  6 | res = 3.0760e-14 | Converged
+  Attempting nu = 0.1500...
+      Iter  0 | res = 2.1090e-01 | Linear Solve Time: 23.6585s
+      Iter  1 | res = 1.2982e-02 | Linear Solve Time: 25.1799s
+      Iter  2 | res = 3.3767e-05 | Linear Solve Time: 28.7754s
+      Iter  3 | res = 4.7667e-11 | Converged
+  Attempting nu = 0.1125...
+      Iter  0 | res = 2.1606e-01 | Linear Solve Time: 23.8631s
+      Iter  1 | res = 1.3046e-02 | Linear Solve Time: 23.5812s
+      Iter  2 | res = 3.4066e-05 | Linear Solve Time: 24.1323s
+      Iter  3 | res = 5.5804e-11 | Converged
+  Attempting nu = 0.0844...
+      Iter  0 | res = 2.1543e-01 | Linear Solve Time: 23.4802s
+      Iter  1 | res = 1.1536e-02 | Linear Solve Time: 22.0711s
+      Iter  2 | res = 2.6471e-05 | Linear Solve Time: 24.8330s
+      Iter  3 | res = 3.9633e-11 | Converged
+  Attempting nu = 0.0633...
+      Iter  0 | res = 2.0938e-01 | Linear Solve Time: 25.8478s
+      Iter  1 | res = 9.8983e-03 | Linear Solve Time: 28.5186s
+      Iter  2 | res = 2.1069e-05 | Linear Solve Time: 26.5964s
+      Iter  3 | res = 4.2540e-11 | Converged
+  Attempting nu = 0.0500...
+      Iter  0 | res = 1.6708e-01 | Linear Solve Time: 26.1382s
+      Iter  1 | res = 5.9376e-03 | Linear Solve Time: 38.2595s
+      Iter  2 | res = 1.3121e-05 | Linear Solve Time: 36.7023s
+      Iter  3 | res = 5.2974e-11 | Converged
+---------------------------------------------------------------------------------------------------------
+CONVERGED at nu=0.05.
+Total Execution Time: 567.8705 seconds.

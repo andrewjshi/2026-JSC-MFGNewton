@@ -1,0 +1,10 @@
+===========================================================================
+ Reference Constant from Screenshot: -1.22579135
+===========================================================================
+Running Gentle Asymptotic Continuation...
+Solved rho = 1.0e-01 | Damping: 0.5 | Iters: 141  | Time: 0.31s | lambda_est: 1.03943554
+Solved rho = 1.0e-02 | Damping: 0.5 | Iters: 116  | Time: 0.21s | lambda_est: 0.62777176
+Solved rho = 5.0e-03 | Damping: 0.5 | Iters: 81   | Time: 0.14s | lambda_est: 0.60369608
+Solved rho = 1.0e-03 | Damping: 0.5 | Iters: 127  | Time: 1.84s | lambda_est: 0.58434408
+Solved rho = 5.0e-04 | Damping: 0.1 | Iters: 487  | Time: 7.02s | lambda_est: 0.58191937
+Solved rho = 2.0e-04 | Damping: 0.1 | Iters: 547  | Time: 8.04s | lambda_est: 0.58046393

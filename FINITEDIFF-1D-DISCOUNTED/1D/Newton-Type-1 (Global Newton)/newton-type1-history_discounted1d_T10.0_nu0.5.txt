@@ -1,0 +1,73 @@
+======================================================================================================================
+   DISCOUNTED MFG EXAMPLE (NEWTON TYPE 1: GLOBAL NEWTON)
+======================================================================================================================
+Parameters:
+  xmin = -2.0, xmax = 2.0
+  T    = 10.0, Nx = 200, Nt = 200
+  nu   = 0.5, rho = 0.5, mu = 0
+Solver Parameters:
+  NEWTON_MAX_ITER = 20, NEWTON_TOL = 1e-09
+  Continuation: NU_START=1.0, BETA=0.5, GAMMA=0.5
+Grid Info:
+  dt = 0.050000, dx = 0.020000
+----------------------------------------------------------------------------------------------------------------------
+First Solve: nu = 1.0000
+      Iter  0 | res = 3.0000e+00 | Solve Time: 5.4688s
+      Iter  1 | res = 8.0417e-01 | Solve Time: 4.3494s
+      Iter  2 | res = 9.5257e-01 | Solve Time: 4.7622s
+      Iter  3 | res = 8.5371e-01 | Solve Time: 4.5585s
+      Iter  4 | res = 8.2384e-03 | Solve Time: 4.6065s
+      Iter  5 | res = 4.6250e-06 | Solve Time: 5.5148s
+      Iter  6 | res = 4.2810e-13 (Converged)
+    -> Converged! (res=4.2810e-13) Total for nu=1.0000: 33.1671s
+
+  Attempting nu = 0.5000...
+      Iter  0 | res = 2.7040e+00 | Solve Time: 4.7348s
+      Iter  1 | res = 1.2038e+00 | Solve Time: 4.8333s
+      Iter  2 | res = 1.3066e+233 | Solve Time: 4.7227s
+    -> Failed (res=nan) in 16.5287s. Backtracking...
+  Attempting nu = 0.7500...
+      Iter  0 | res = 9.0502e-01 | Solve Time: 5.1895s
+      Iter  1 | res = 3.5553e-02 | Solve Time: 6.9960s
+      Iter  2 | res = 1.3915e-03 | Solve Time: 7.4823s
+      Iter  3 | res = 2.3631e-06 | Solve Time: 7.9125s
+      Iter  4 | res = 6.5805e-12 (Converged)
+    -> Converged! (res=6.5805e-12) Total for nu=0.7500: 30.8313s
+
+  Attempting nu = 0.5000...
+      Iter  0 | res = 1.7990e+00 | Solve Time: 9.2984s
+      Iter  1 | res = 1.1998e+00 | Solve Time: 7.1262s
+      Iter  2 | res = 7.8398e+262 | Solve Time: 7.7274s
+    -> Failed (res=nan) in 26.8573s. Backtracking...
+  Attempting nu = 0.6250...
+      Iter  0 | res = 7.2646e-01 | Solve Time: 5.5571s
+      Iter  1 | res = 4.2185e-02 | Solve Time: 6.4184s
+      Iter  2 | res = 2.9935e-03 | Solve Time: 5.3128s
+      Iter  3 | res = 3.3862e-06 | Solve Time: 4.9576s
+      Iter  4 | res = 3.2250e-12 (Converged)
+    -> Converged! (res=3.2250e-12) Total for nu=0.6250: 25.1215s
+
+  Attempting nu = 0.5000...
+      Iter  0 | res = 1.0725e+00 | Solve Time: 5.0224s
+      Iter  1 | res = 1.1335e+00 | Solve Time: 6.5895s
+      Iter  2 | res = 2.9174e+191 | Solve Time: 6.1381s
+    -> Failed (res=nan) in 20.0646s. Backtracking...
+  Attempting nu = 0.5625...
+      Iter  0 | res = 4.7968e-01 | Solve Time: 5.3833s
+      Iter  1 | res = 2.7197e-02 | Solve Time: 4.8426s
+      Iter  2 | res = 1.4058e-03 | Solve Time: 4.9532s
+      Iter  3 | res = 4.6995e-07 | Solve Time: 4.5003s
+      Iter  4 | res = 2.5568e-13 (Converged)
+    -> Converged! (res=2.5568e-13) Total for nu=0.5625: 22.6700s
+
+  Attempting nu = 0.5000...
+      Iter  0 | res = 5.9282e-01 | Solve Time: 8.0334s
+      Iter  1 | res = 7.1348e-02 | Solve Time: 6.9452s
+      Iter  2 | res = 3.3346e-02 | Solve Time: 7.4627s
+      Iter  3 | res = 2.0036e-04 | Solve Time: 9.2629s
+      Iter  4 | res = 8.1204e-09 | Solve Time: 7.7256s
+      Iter  5 | res = 2.4414e-13 (Converged)
+    -> Converged! (res=2.4414e-13) Total for nu=0.5000: 43.2830s
+
+----------------------------------------------------------------------------------------------------------------------
+Total Execution Time: 218.5241 seconds.
