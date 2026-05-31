@@ -1020,7 +1020,7 @@ def main():
             newton_max_iter=NEWTON_MAX_ITER, newton_tol=GN_NEWTON_TOL,
             use_continuation=False, initial_guess=W_flat,
             linear_solver=LINEAR_SOLVER_GN,
-            log_file=None, verbose=False,
+            log_file=None, verbose=True,   # show each Newton iteration of the handoff
         )
         cum += r["time"]
         phase_time[3] += r["time"]
@@ -1055,7 +1055,7 @@ def main():
                 newton_max_iter=NEWTON_MAX_ITER, newton_tol=GN_NEWTON_TOL,
                 use_continuation=False, initial_guess=W_flat,
                 linear_solver=LINEAR_SOLVER_GN,
-                log_file=None, verbose=False,
+                log_file=None, verbose=True,   # show each Newton iteration of the continuation
             )
             cum += r["time"]
             phase_time[4] += r["time"]
