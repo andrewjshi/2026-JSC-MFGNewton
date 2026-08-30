@@ -1,0 +1,39 @@
+======================================================================================================================
+   DOUBLE WELL MFG EXAMPLE (Global Newton)
+======================================================================================================================
+Parameters:
+  xmin = -2.5, xmax = 2.5
+  T    = 1.0, Nx = 500, Nt = 100
+  nu   = 0.1, alpha = 2, kappa = 1.0
+Solver Parameters:
+  NEWTON_MAX_ITER = 20, NEWTON_TOL = 1e-09
+  Continuation: NU_START=0.5, TAU=0.1, GAMMA=0.5, CONT_TOL=0.0001
+Grid Info:
+  dt = 0.010000, dx = 0.010000
+Problem Specific Parameters:
+  tilt = 0.3, well_depth = 2.0, initial_std = 0.6, boundary = homogeneous Neumann/no-flux
+----------------------------------------------------------------------------------------------------------------------
+First Solve: nu = 0.5000
+      Iter  0 | res = 1.0535e+04 | Solve Time: 3.7208s
+      Iter  1 | res = 2.3454e+03 | Solve Time: 3.8276s
+      Iter  2 | res = 4.6703e+02 | Solve Time: 3.7862s
+      Iter  3 | res = 1.0650e+02 | Solve Time: 3.8245s
+      Iter  4 | res = 1.7115e+01 | Solve Time: 3.8392s
+      Iter  5 | res = 8.6106e-01 | Solve Time: 3.7163s
+      Iter  6 | res = 2.6638e-03 | Solve Time: 3.6705s
+      Iter  7 | res = 2.6565e-08 | Solve Time: 3.7600s
+      Iter  8 | res = 7.1395e-11 (Converged)
+    -> Converged! (res=7.1395e-11) Total for nu=0.5000: 31.7218s
+
+  Attempting nu = 0.1000...
+      Iter  0 | res = 1.2026e+03 | Solve Time: 3.8247s
+      Iter  1 | res = 4.2291e+02 | Solve Time: 3.6252s
+      Iter  2 | res = 1.8212e+01 | Solve Time: 3.9436s
+      Iter  3 | res = 2.9121e-01 | Solve Time: 4.6729s
+      Iter  4 | res = 1.1777e-03 | Solve Time: 3.3829s
+      Iter  5 | res = 9.0002e-09 | Solve Time: 4.6886s
+      Iter  6 | res = 5.1614e-11 (Converged)
+    -> Converged! (res=5.1614e-11) Total for nu=0.1000: 25.3422s
+
+----------------------------------------------------------------------------------------------------------------------
+Total Execution Time: 57.0643 seconds.
