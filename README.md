@@ -77,6 +77,4 @@ Each table below maps a figure/table in the paper to the script that generates i
 | Paper | Script | Output |
 |---|---|---|
 | Figure 16 | [trafficlight-1d-picard.py](https://github.com/andrewjshi/2026-JSC-MFGNewton/tree/main/TRAFFIC-LIGHT%20%281D%29/Picard) (run at θ = 0.3 and θ = 0.1) | [trafficlight-1d-picard-history.txt](https://github.com/andrewjshi/2026-JSC-MFGNewton/blob/main/TRAFFIC-LIGHT%20%281D%29/Picard/trafficlight-1d-picard-history.txt) (one per θ) |
-| Figure 17 | [trafficlight-1d-newton.py](https://github.com/andrewjshi/2026-JSC-MFGNewton/tree/main/TRAFFIC-LIGHT%20%281D%29/Newton) | [img/](https://github.com/andrewjshi/2026-JSC-MFGNewton/tree/main/TRAFFIC-LIGHT%20%281D%29/Picard/img) frames: frame_000, 029, 050, 069, 080, 100 .png |
-
-*Figure 17 can also be produced by `trafficlight-1d-picard.py`.*
+| Figure 17 | [trafficlight-1d-picard.py](https://github.com/andrewjshi/2026-JSC-MFGNewton/tree/main/TRAFFIC-LIGHT%20%281D%29/Picard) | [img/](https://github.com/andrewjshi/2026-JSC-MFGNewton/tree/main/TRAFFIC-LIGHT%20%281D%29/Picard/img) frames: frame_000, 029, 050, 069, 080, 100 .png |
