@@ -1,6 +1,7 @@
 """Solve the 1D ergodic MFG with the Picard method."""
 
 import time
+from pathlib import Path
 
 import matplotlib
 matplotlib.use("Agg")
@@ -42,16 +43,20 @@ num_x = x.size
 norm_const = np.sqrt(Dx * dt)
 
 # --- Saved File Names ---
-history_filename = "ergodic-1d-picard-history.txt"
-plot_snapshot_filename = "ergodic-1d-picard-plot.png"
-
+HERE = Path(__file__).resolve().parent   # outputs land beside this script
+history_filename = str(HERE / "ergodic-1d-picard-history.txt")
+plot_snapshot_filename = str(HERE / "ergodic-1d-picard-plot.png")
 # ==========================================
 # SECTION 2: PHYSICS DEFINITIONS (INCLUDING HAMILTONIAN) & EXACT SOLUTION
 # ==========================================
 
 s_sq_star = (sigma**4) / 4.0
 eta_star = 1.0 / (sigma**2)
-lam = -1.0 + 0.5 * np.log(2.0 / (np.pi * sigma**4))
+# Ergodic constant, Eq. (lambda) of the paper: lambda = d + (d/2) ln(2/(pi sigma^4)), d = 1.
+# Sign convention matches discounted-1d-picard.py: the HJB residual is
+#   lambda - nu*Lap(u) - 0.5|grad u|^2 - ln(m) = 0,
+# for which (u_star, m_star) is an exact stationary solution with no extra forcing.
+lam = 1.0 + 0.5 * np.log(2.0 / (np.pi * sigma**4))
 
 avg_quad = (width**2 / 3.0) + mu**2
 omega_star = -eta_star * avg_quad
@@ -132,7 +137,7 @@ def solve_hjb_backward(M_flow):
             dp, dm = D_plus @ u_curr, D_minus @ u_curr
 
             H_val = discrete_Hamiltonian(dp, dm)
-            F = A_diff @ u_curr + dt * (lam + H_val - f_val) - u_next
+            F = A_diff @ u_curr + dt * (lam - H_val + f_val) - u_next
             F[0] = u_curr[0] - u_bnd_val
             F[-1] = u_curr[-1] - u_bnd_val
 
@@ -141,7 +146,7 @@ def solve_hjb_backward(M_flow):
             p_min, p_max = np.minimum(dp, 0), np.maximum(dm, 0)
             dH_dU = sp.diags(p_min) @ D_plus + sp.diags(p_max) @ D_minus
 
-            J = A_diff + dt * dH_dU
+            J = A_diff - dt * dH_dU
             J = J.tolil()
             J[0, :], J[0, 0] = 0.0, 1.0
             J[-1, :], J[-1, -1] = 0.0, 1.0
@@ -183,8 +188,8 @@ def solve_fp_forward(U_flow):
 # SECTION 5: DAMPED PICARD ITERATION
 # ==========================================
 
-start_time_total = time.time()
-with open(history_filename, "w", buffering=1) as f:
+start_time_total = time.perf_counter()
+with open(history_filename, "w", buffering=1) as f_log:
     header = (
         f"{'='*118}\n"
         f"   ERGODIC MFG EXAMPLE (Picard)\n"
@@ -204,7 +209,7 @@ with open(history_filename, "w", buffering=1) as f:
         f"{'-'*118}\n"
     )
     print(header, end='')
-    f.write(header)
+    f_log.write(header)
 
     M_flow = np.zeros((Nt + 1, num_x))
     M_flow[0] = m0.copy()
@@ -219,7 +224,7 @@ with open(history_filename, "w", buffering=1) as f:
     U_flow = np.zeros((Nt + 1, num_x))
 
     for k in range(1, PICARD_MAX_ITER + 1):
-        step_start = time.time()
+        step_start = time.perf_counter()
 
         U_cand, n_it = solve_hjb_backward(M_flow)
         U_flow_new = DAMPING * U_cand + (1 - DAMPING) * U_flow
@@ -235,23 +240,29 @@ with open(history_filename, "w", buffering=1) as f:
         abs_err_m = delta_m_norm * norm_const
         rel_err_m = delta_m_norm / previous_m_norm if previous_m_norm > 1e-12 else (0.0 if delta_m_norm <= 1e-12 else 1.0)
 
-        step_time = time.time() - step_start
+        step_time = time.perf_counter() - step_start
 
         log_str = f"{k:<5} | {abs_err_u:.4e}   | {rel_err_u:.4e}   | {abs_err_m:.4e}   | {rel_err_m:.4e}   | {n_it:<10} | {step_time:.4f}"
         print(log_str)
-        f.write(log_str + "\n")
+        f_log.write(log_str + "\n")
 
         U_flow, M_flow = U_flow_new, M_flow_new
         if rel_err_u < PICARD_TOL and rel_err_m < PICARD_TOL:
-            conv_msg = f"{'-'*118}\nCONVERGED at nu={nu} in {k} iterations.\n"
+            conv_msg = f"{'-'*118}\nCONVERGED in {k} iterations.\n"
             print(conv_msg)
-            f.write(conv_msg)
+            f_log.write(conv_msg)
             break
+    else:
+        fail_msg = (f"{'-'*118}\n"
+                    f"FAILED TO CONVERGE WITHIN PICARD_MAX_ITER = {PICARD_MAX_ITER}.\n")
+        print(fail_msg)
+        f_log.write(fail_msg)
 
-    total_time = time.time() - start_time_total
+
+    total_time = time.perf_counter() - start_time_total
     time_msg = f"Total Execution Time: {total_time:.4f} seconds.\n"
     print(time_msg)
-    f.write(time_msg)
+    f_log.write(time_msg)
 
 # ==========================================
 # SECTION 6: VISUALIZATION
@@ -279,9 +290,9 @@ plt.tight_layout(); plt.savefig(plot_snapshot_filename); plt.close(fig2)
 
 # Save with mean subtraction for both to ensure they overlap perfectly
 u_num_mid = U_flow[Nt // 2, :]
-np.savetxt("ergodic_value_comparison.dat", np.column_stack((
+np.savetxt(HERE / "ergodic_value_comparison.dat", np.column_stack((
     x,
     u_star - np.mean(u_star),
     u_num_mid - np.mean(u_num_mid)
 )))
-np.savetxt("ergodic_density_comparison.dat", np.column_stack((x, m_star, M_flow[Nt // 2, :])))
+np.savetxt(HERE / "ergodic_density_comparison.dat", np.column_stack((x, m_star, M_flow[Nt // 2, :])))
