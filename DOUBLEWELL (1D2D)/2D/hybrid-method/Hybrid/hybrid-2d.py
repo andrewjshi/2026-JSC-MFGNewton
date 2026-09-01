@@ -180,7 +180,7 @@ def solve_np(
             dmx = D_minus_x @ U[n]
             dpy = D_plus_y @ U[n]
             dmy = D_minus_y @ U[n]
-            H_total = discrete_Hamiltonian(dpx, dmx, dpy, dmy, compute_f(M[n]))
+            H_total = discrete_Hamiltonian(dpx, dmx, dpy, dmy, compute_f(M[n + 1]))
             R_HJB = A_diff @ U[n] + dt * H_total - U[n + 1]
             r_hjb_max = max(r_hjb_max, np.linalg.norm(R_HJB, np.inf))
 
