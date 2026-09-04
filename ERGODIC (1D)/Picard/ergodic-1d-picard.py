@@ -52,11 +52,11 @@ plot_snapshot_filename = str(HERE / "ergodic-1d-picard-plot.png")
 
 s_sq_star = (sigma**4) / 4.0
 eta_star = 1.0 / (sigma**2)
-# Ergodic constant, Eq. (lambda) of the paper: lambda = d + (d/2) ln(2/(pi sigma^4)), d = 1.
+# Ergodic constant, Eq. (lambda) of the paper: lambda = d - (d/2) ln(2/(pi sigma^4)), d = 1.
 # Sign convention matches discounted-1d-picard.py: the HJB residual is
-#   lambda - nu*Lap(u) - 0.5|grad u|^2 - ln(m) = 0,
+#   lambda - nu*Lap(u) + 0.5|grad u|^2 + ln(m) = 0,   (H = |p|^2/2 + ln m)
 # for which (u_star, m_star) is an exact stationary solution with no extra forcing.
-lam = 1.0 + 0.5 * np.log(2.0 / (np.pi * sigma**4))
+lam = 1.0 - 0.5 * np.log(2.0 / (np.pi * sigma**4))
 
 avg_quad = (width**2 / 3.0) + mu**2
 omega_star = -eta_star * avg_quad
@@ -78,8 +78,13 @@ m_bnd_val = m_star[0]
 u_bnd_val = u_star[0]
 
 # Initial/Terminal Conditions
+# The initial density is flat (renormalized); the terminal value is the exact
+# stationary profile.  With H = |p|^2/2 + ln m (non-monotone coupling) the
+# finite-horizon problem started from a constant terminal value converges to a
+# different forward-backward solution whose T/2 slice is not the stationary
+# state, so the terminal profile is anchored to the closed-form reference.
 m0 = np.full(num_x, m_bnd_val)
-uT = np.full(num_x, u_bnd_val)
+uT = u_star.copy()
 
 def compute_f(m_dist):
     m_safe = np.maximum(m_dist, 1e-15)
@@ -137,7 +142,7 @@ def solve_hjb_backward(M_flow):
             dp, dm = D_plus @ u_curr, D_minus @ u_curr
 
             H_val = discrete_Hamiltonian(dp, dm)
-            F = A_diff @ u_curr + dt * (lam - H_val + f_val) - u_next
+            F = A_diff @ u_curr + dt * (lam + H_val - f_val) - u_next
             F[0] = u_curr[0] - u_bnd_val
             F[-1] = u_curr[-1] - u_bnd_val
 
@@ -146,7 +151,7 @@ def solve_hjb_backward(M_flow):
             p_min, p_max = np.minimum(dp, 0), np.maximum(dm, 0)
             dH_dU = sp.diags(p_min) @ D_plus + sp.diags(p_max) @ D_minus
 
-            J = A_diff - dt * dH_dU
+            J = A_diff + dt * dH_dU
             J = J.tolil()
             J[0, :], J[0, 0] = 0.0, 1.0
             J[-1, :], J[-1, -1] = 0.0, 1.0

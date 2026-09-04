@@ -63,7 +63,7 @@ num_in = num_x - 2
 X = np.zeros(2 * num_in + 1)
 X[:num_in] = u_exact_stat[in_idx]
 X[num_in:2*num_in] = m_exact_stat[in_idx]
-X[-1] = -0.612086 
+X[-1] = 1.0 + 0.5 * np.log(np.pi * sigma**4 / 2.0)   # continuum lambda = d - (d/2) ln(2/(pi sigma^4)), d = 1 
 
 LAMBDA_H = None
 with open(history_filename, "w") as f_hist:
@@ -76,7 +76,7 @@ with open(history_filename, "w") as f_hist:
         p_min, p_max = np.minimum(dp, 0), np.maximum(dm, 0)
         H_p = 0.5 * p_min**2 + 0.5 * p_max**2
         J_G = (sp.diags(p_min) @ D_plus + sp.diags(p_max) @ D_minus).tocsr()
-        R_u_full = -nu * (Laplacian @ u) + compute_f(m) - H_p + lam_var
+        R_u_full = -nu * (Laplacian @ u) + H_p - compute_f(m) + lam_var
         Adv_Op = J_G.transpose().tocsr()
         R_m_full = -nu * (Laplacian @ m) + Adv_Op @ m
         R = np.concatenate((R_u_full[in_idx], R_m_full[in_idx], [np.sum(m) * Dx - target_mass]))
@@ -91,8 +91,8 @@ with open(history_filename, "w") as f_hist:
             f_hist.write(f"\n---> EXACT DISCRETE BENCHMARK LOCKED: {LAMBDA_H:.6f} <---\n\n")
             break 
             
-        J_uu_full = -nu * Laplacian - J_G
-        J_um_full = sp.diags(-1.0 / np.maximum(m, 1e-15)).tocsr()
+        J_uu_full = -nu * Laplacian + J_G
+        J_um_full = sp.diags(1.0 / np.maximum(m, 1e-15)).tocsr()
         J_mu_full = (
             D_plus.transpose() @ sp.diags(m * (dp < 0)) @ D_plus
             + D_minus.transpose() @ sp.diags(m * (dm > 0)) @ D_minus
@@ -110,7 +110,7 @@ with open(history_filename, "w") as f_hist:
 # SECTION 4: PART B - DYNAMIC RHO SOLVER
 # ==========================================
 def get_exact_params(rho_val):
-    eta = (1.0 + rho_val * nu) / (2.0 * nu)
+    eta = (1.0 - rho_val * nu) / (2.0 * nu)
     s_sq = nu / (2.0 * eta)
     m_peak = 1.0 / np.sqrt(2.0 * np.pi * s_sq)
     return eta, s_sq, m_peak
@@ -138,12 +138,12 @@ def global_newton_step(rho_val, W_guess, log_file):
             u_curr, u_next, m_curr, m_next = U[n], U[n+1], M[n], M[n+1]
             dp, dm = D_plus @ u_curr, D_minus @ u_curr
             p_min, p_max, m_safe = np.minimum(dp, 0), np.maximum(dm, 0), np.maximum(m_curr, 1e-15)
-            F_u = A_diff_U @ u_curr + dt * (compute_f(m_safe) - (0.5 * p_min**2 + 0.5 * p_max**2)) - u_next
+            F_u = A_diff_U @ u_curr + dt * ((0.5 * p_min**2 + 0.5 * p_max**2) - compute_f(m_safe)) - u_next
             J_G = (sp.diags(p_min) @ D_plus + sp.diags(p_max) @ D_minus).tocsr()
-            J_u = A_diff_U - dt * J_G
+            J_u = A_diff_U + dt * J_G
             F_u[0], F_u[-1] = u_curr[0] - u_exact_bnd[0], u_curr[-1] - u_exact_bnd[-1]
             J_u_lil = J_u.tolil(); J_u_lil[0, :], J_u_lil[-1, :], J_u_lil[0, 0], J_u_lil[-1, -1] = 0, 0, 1, 1
-            J_um_lil = (-dt * sp.diags(1.0 / m_safe)).tolil(); J_um_lil[0, :], J_um_lil[-1, :] = 0, 0
+            J_um_lil = (dt * sp.diags(1.0 / m_safe)).tolil(); J_um_lil[0, :], J_um_lil[-1, :] = 0, 0
             I_neg_u = I_neg.tolil(); I_neg_u[0, 0], I_neg_u[-1, -1] = 0, 0
             F_U[n], J_UU[n][n], J_UU[n][n+1], J_UM[n][n] = F_u, J_u_lil.tocsr(), I_neg_u.tocsr(), J_um_lil.tocsr()
             Adv_Op = J_G.transpose().tocsr()
@@ -160,7 +160,10 @@ def global_newton_step(rho_val, W_guess, log_file):
             F_M[n+1], J_MM[n+1][n+1], J_MM[n+1][n], J_MU[n+1][n] = F_m, A_M_lil.tocsr(), I_neg_m.tocsr(), J_mu_lil.tocsr()
         J = sp.bmat([[sp.bmat(J_UU), sp.bmat(J_UM)], [sp.bmat(J_MU), sp.bmat(J_MM)]]).tocsr()
         F = np.concatenate([F_U.flatten(), F_M.flatten()])
-        res = np.linalg.norm(F, np.inf)
+        # Scale the residual by the solution magnitude: u = O(lambda/rho) grows
+        # without bound as rho -> 0, so an absolute tolerance cannot be met
+        # below the floating-point floor at the smallest discount factors.
+        res = np.linalg.norm(F, np.inf) / max(1.0, np.max(np.abs(U)))
         
         t_solve = time.time()
         if res < NEWTON_TOL: 

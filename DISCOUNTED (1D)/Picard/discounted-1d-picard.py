@@ -52,14 +52,14 @@ density_data_filename = "discounted-1d-picard-density.dat"
 # ==========================================
 
 # 1. Quadratic Coefficient (Curvature)
-eta = (1.0 + rho * nu) / (2.0 * nu)
+eta = (1.0 - rho * nu) / (2.0 * nu)
 
 # 2. Gaussian Variance (Consistency Condition)
 s_sq = nu / (2.0 * eta)
 m_peak = 1.0 / np.sqrt(2.0 * np.pi * s_sq)
 
 # 3. Value Function Offset (omega)
-omega = (2.0 * nu * eta + np.log(m_peak)) / rho
+omega = (2.0 * nu * eta - np.log(m_peak)) / rho
 
 def get_exact_m(x_vals):
     return m_peak * np.exp(-(x_vals - mu)**2 / (2.0 * s_sq))
@@ -82,7 +82,7 @@ def compute_f(m_dist):
 
 def discrete_Hamiltonian(dp, dm, f_val):
     H_p = 0.5 * np.minimum(dp, 0)**2 + 0.5 * np.maximum(dm, 0)**2
-    return f_val - H_p
+    return H_p - f_val
 
 def dH_dp(p):
     return p
@@ -142,7 +142,7 @@ def solve_hjb_backward(M_flow):
             p_min, p_max = np.minimum(dp, 0), np.maximum(dm, 0)
             dH_dU = sp.diags(dH_dp(p_min)) @ D_plus + sp.diags(dH_dp(p_max)) @ D_minus
 
-            J = A_diff - dt * dH_dU
+            J = A_diff + dt * dH_dU
             J = J.tolil()
             J[0, :], J[0, 0] = 0.0, 1.0
             J[-1, :], J[-1, -1] = 0.0, 1.0
@@ -200,7 +200,7 @@ with open(history_filename, "w", buffering=1) as f:
         f"Grid Info:\n"
         f"  dt = {dt:.6f}, dx = {Dx:.6f}\n"
         f"Problem Specific Parameters:\n"
-        f"  coupling = -log(m), boundary = exact stationary Dirichlet\n"
+        f"  H = |p|^2/2 + log(m) (running cost -log(m)), boundary = exact stationary Dirichlet\n"
         f"  initial_m = exact stationary profile, terminal_u = exact stationary profile\n"
         f"  eta = {eta:.12g}, variance = {s_sq:.12g}, m_peak = {m_peak:.12g}, omega = {omega:.12g}\n"
         f"  m_boundary = {m_bnd_val:.12g}, u_boundary = {u_bnd_val:.12g}\n"

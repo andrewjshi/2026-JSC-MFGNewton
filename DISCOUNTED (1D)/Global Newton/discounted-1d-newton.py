@@ -54,10 +54,10 @@ density_data_filename = "discounted-1d-newton-density.dat"
 # ==========================================
 
 def get_exact_params(nu_val):
-    eta = (1.0 + rho * nu_val) / (2.0 * nu_val)
+    eta = (1.0 - rho * nu_val) / (2.0 * nu_val)
     s_sq = nu_val / (2.0 * eta)
     m_peak = 1.0 / np.sqrt(2.0 * np.pi * s_sq)
-    omega = (2.0 * nu_val * eta + np.log(m_peak)) / rho
+    omega = (2.0 * nu_val * eta - np.log(m_peak)) / rho
     return eta, s_sq, m_peak, omega
 
 def get_exact_m(x_vals, nu_val):
@@ -80,7 +80,7 @@ def compute_f(m_dist):
 
 def discrete_Hamiltonian(dp, dm, f_val):
     H_p = 0.5 * np.minimum(dp, 0)**2 + 0.5 * np.maximum(dm, 0)**2
-    return f_val - H_p
+    return H_p - f_val
 
 def dH_dp(p):
     return p
@@ -151,10 +151,10 @@ def global_newton_step(nu_val, W_guess, log_file=None):
             F_u[0], F_u[-1] = u_curr[0] - u_bnd, u_curr[-1] - u_bnd
             F_U[n] = F_u
 
-            J_u = A_diff_U - dt * (sp.diags(dH_dp(p_min)) @ D_plus + sp.diags(dH_dp(p_max)) @ D_minus)
+            J_u = A_diff_U + dt * (sp.diags(dH_dp(p_min)) @ D_plus + sp.diags(dH_dp(p_max)) @ D_minus)
             J_u = J_u.tolil(); J_u[0,:], J_u[0,0], J_u[-1,:], J_u[-1,-1] = 0, 1, 0, 1
             J_UU[n][n], J_UU[n][n+1] = J_u.tocsr(), I_neg
-            J_um = -dt * sp.diags(1.0 / m_next_safe).tolil(); J_um[0,:], J_um[-1,:] = 0, 0
+            J_um = dt * sp.diags(1.0 / m_next_safe).tolil(); J_um[0,:], J_um[-1,:] = 0, 0
             J_UM[n][n] = zero_block
             J_UM[n][n+1] = J_um.tocsr()
 
@@ -237,7 +237,7 @@ with open(history_filename, "w", buffering=1) as f:
         f"Grid Info:\n"
         f"  dt = {dt:.6f}, dx = {Dx:.6f}\n"
         f"Problem Specific Parameters:\n"
-        f"  coupling = -log(m), boundary = exact stationary Dirichlet at each viscosity\n"
+        f"  H = |p|^2/2 + log(m) (running cost -log(m)), boundary = exact stationary Dirichlet at each viscosity\n"
         f"  initial_m = exact stationary profile, terminal_u = exact stationary profile\n"
         f"  target eta = {eta_target:.12g}, variance = {variance_target:.12g}, m_peak = {m_peak_target:.12g}, omega = {omega_target:.12g}\n"
         f"  target m_boundary = {m_boundary_target:.12g}, u_boundary = {u_boundary_target:.12g}\n"
